@@ -1,0 +1,12 @@
+1. babel-node: 섹시 자바스크립트를 실행하게 도와줌
+배포전에 안 섹시한 자바스크립트로 바꿔줘야 함 -> babel-cli설치
+
+2. 
+  "scripts": {
+    "start": "node build/init.js", // node로 실행
+    "build:server": "babel src -d build", //babel 로 src컴파일, build에 저장
+    "dev:server": "nodemon --exec babel-node src/init.js"
+  },
+
+3. npm start -> error발생
+init.js 위에 import "regenerator-runtime"; 추가해서 해결

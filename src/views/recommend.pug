@@ -1,0 +1,54 @@
+extends layout
+include mixins/friend
+
+block content
+    nav 
+        ul 
+            li 
+                a(href="/home") Home
+            li 
+                a(href="/worldcup") Worldcup
+            li 
+                a(href="/recommend-food") Recommend Food
+            if loggedIn
+                li 
+                    a(href="/") Logout
+    if(k)
+        .div1 
+            img(src=`${recommendFoods[1]}`)
+            div #{recommendFoods[0]}
+            br
+        .div2 
+            img(src=`${recommendFoods[3]}`)
+            div #{recommendFoods[2]}
+            br
+        .div3 
+            img(src=`${recommendFoods[5]}`)
+            div #{recommendFoods[4]}
+            
+    br
+    a#recommend(method="GET", href = "/recommend-food/?foodsList=N")="메뉴 추천 받기"
+    hr
+    div.friends
+        each friend in friends
+            +friend(friend)
+
+    script.
+        let foods = [];
+        friendList = document.querySelector(".friends");
+
+        function handleClick(event){
+            event.preventDefault();
+            const clickedNode = event.target;
+            clickedNode.style.backgroundColor = "orange";
+            const tmp = clickedNode.getAttribute('id');
+            foods.push(tmp);
+            document.getElementById('recommend').href = `/recommend-food/?foodsList=${JSON.stringify(foods)}`
+        }
+
+        function init(){
+            friendList.addEventListener("click", handleClick);
+        }
+
+        init();
+    

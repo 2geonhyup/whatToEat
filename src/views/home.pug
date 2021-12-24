@@ -1,0 +1,26 @@
+extends layout
+include mixins/friend
+
+block content
+    nav 
+        ul 
+            li 
+                a(href="/home") Home
+            li 
+                a(href="/worldcup") Worldcup
+            li 
+                a(href="/recommend-food") Recommend Food
+            if loggedIn
+                li 
+                    a(href="/") Logout
+    if errorMessage
+        span=errorMessage
+    form(method="POST")
+        input(placeholder="Add by username",name="friendname", type="text")
+        input(type="submit", value="Add now") 
+    hr
+    div.friends
+        each friend in friends
+            +friend(friend)
+        else
+            li Sorry nothing found.

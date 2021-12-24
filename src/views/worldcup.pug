@@ -1,0 +1,179 @@
+doctype html
+head
+  title worldcup
+  nav 
+        ul 
+            li 
+                a(href="/home") Home
+  meta(charset='utf-8')
+  style.
+    img{
+    width: 500px;
+    height: 500px;
+    }
+center
+  h1 worldcup
+  p#cal
+  div#div1
+    img#image(onclick='change(0)')
+    div#description1
+  br
+  div#div2
+    img#images(onclick='change(1)')
+    div#description2
+  a#home(method="GET")
+  script.
+      arr = [
+      "아구찜",	    
+      "육회",
+      "보쌈",	
+      "비빔밥",
+      "설렁탕",
+      "닭도리탕",
+      "된장찌개",
+      "부대찌개",
+      "김치볶음밥",
+      "냉면",
+      "칼국수",
+      "불고기",
+      "짜장면",
+      "짬뽕",
+      "김밥",
+      "떡볶이",
+      "순대",
+      "탕수육",
+      "마라탕",
+      "양고기",
+      "새우볶음밥",
+      "훠궈",
+      "갈비찜",
+      "딤섬",
+      "스시",
+      "규동",
+      "소바",
+      "타코야키	",
+      "돈가스	",
+      "샤브샤브	",
+      "오므라이스	",
+      "우동",
+      "카레",
+      "닭갈비",
+      "에그 샌드위치",
+      "쌀국수",
+      "연어회",
+      "까르보나라",
+      "미트볼스파게티",
+      "국밥",
+      "스테이크",
+      "포테이토피자",
+      "마르게리따피자",
+      "수제버거",
+      "삼겹살",
+      "제육볶음	",
+      "파니니	",
+      "생선구이	",
+      "후라이드치킨	",
+      "양념치킨	",
+      "모듬회	",
+      "만두국	",
+      "대하소금구이	",
+      "도넛	",
+      "애플파이	",
+      "곱창",
+      "비프웰링턴	",
+      "회덮밥	",
+      "치즈케이크	",
+      "막국수	",
+      "라면",
+      "안동찜닭",
+      "계란찜",
+      "파전",
+    ];
+    text ="";
+    var images=[];
+    var sImages = [];
+    var cnt=0;
+    var num=0;
+    var sNum = 0;
+    var cnt2=0;
+    let result = "";
+
+    function show(){
+    for(i=0; i<64; i++)
+    {
+    images[i]= "/images/" + (i+1) + ".jpg";
+    }
+    images.sort(function(a,b){return 0.5- Math.random()});
+    showImg(num);
+    }
+
+    show(0);
+
+    function showImg(num){
+    document.getElementById('image').src=images[num];
+    if(cnt != images.length/2){
+      document.getElementById('description1').innerHTML = arr[images[num].replace(/[^0-9]/g,'')-1];
+    }
+    document.getElementById('images').src=images[num+1];
+    if(cnt != images.length/2){
+      document.getElementById('description2').innerHTML = arr[images[num+1].replace(/[^0-9]/g,'')-1];
+    }
+    cnt2++;
+    if(cnt2<=32)
+    text = "64강";
+    else if (cnt2<=48)
+    text = "32강";
+    else if(cnt2<=56)
+    text = "16강";
+    else if(cnt2<=60)
+    text = "8강";
+    else if(cnt2<=62){
+      text = "4강";
+    }
+    else if(cnt2<=63){
+      text = "결승";
+    }
+    console.log(cnt2);
+    document.getElementById('cal').innerHTML=text;
+    }
+
+    function change(n){
+    if (cnt2>63){
+      return;
+    }
+    if(cnt2<100)
+    {
+    cnt++; 
+    if(n == 0) //위 이미지 선택시
+    sImages[sNum++] = images[num];
+    else //아래 이미지 선택시
+    sImages[sNum++] = images[num+1];
+    num+=2;
+    showImg(num); //다음 vs 보여주기
+    if(cnt == images.length/2){ // 이번 라운드 끝날 때 
+    for(i=0; i<sImages.length; i++){
+    images[i] = sImages[i];
+    sImages[i] = null;
+    }
+
+    images.splice(cnt);
+    cnt = 0;
+    num = 0;
+    sNum = 0;
+    if(images.length==1){
+      text = "결과";
+      result = images[0].replace(/[^0-9]/g,'');
+      document.getElementById('div2').style.display = "none";
+      console.log(result);
+      document.getElementById('cal').innerHTML=text;
+      document.getElementById('image').src=images[num];
+      document.getElementById('home').innerHTML = "결과 저장!";
+      document.getElementById('home').href = `/home/?result=${result}`
+      return;
+    }
+    showImg(num);
+    cnt2--;
+    }
+    }
+    
+    }

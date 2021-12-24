@@ -1,0 +1,22 @@
+nodejs 세팅
+
+1. git init
+2. npm init
+-> main 삭제, 
+"scripts": {
+    "dev": "nodemon --exec babel-node src/server.js"
+  }, 설정
+
+3. npm i express
+4. npm install --save-dev @babel/core
+5. touch babel.config.json
+-> {
+    "presets": [
+        "@babel/preset-env"
+    ]
+}
+
+6. npm install @babel/preset-env --save-dev
+7. npm i nodemon --save-dev
+8. npm i morgan
+9. npm i pug
